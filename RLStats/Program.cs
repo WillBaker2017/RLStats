@@ -23,4 +23,9 @@ namespace RLStats
                     webBuilder.UseStartup<Startup>();
                 });
     }
+
+    public class HomeScreen
+    {
+        
+    }
 }

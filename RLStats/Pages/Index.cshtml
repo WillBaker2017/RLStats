@@ -4,30 +4,27 @@
     ViewData["Title"] = "Home page";
 }
 
+
 <div class="text-center">
     <body style="background-color:DodgerBlue;">
-    <h1 class="display-4"><b>RL STATS</b></h1>
-    <p><b>Make an account to see advanced details!</b></p>
-    <form action="/action_page.php">
-        <label for="fname"><b>Username:</b></label>
-        <input type="text" id="uName" name="fname"><br><br>
-        <label for="lname"><b>Password:</b></label>
-        <input type="text" id="pWord" name="lname"><br><br>
-    </form>
-    <p></p>
-    <button type="button">Log In</button>
-    <button type="button">Sign Up</button>
-    <p></p>
-    <p><b>Skip sign in and just see your MMR? Select your platform and enter you in game name.</b></p>
-    <p></p>
-    <button type="button">Steam</button>
-    <button type="button">Xbox</button>
-    <button type="button">Playstaion</button>
-    <p></p>
-    <form action="/action_page.php">
-        <label for="fname"><b>Username:</b></label>
-        <input type="text" id="uName" name="fname"><br><br>
-        <input type="submit" value="Submit">
-    </form>
+
+        
+
+        <form method="post">
+            <h1 class="display-4"><b>RL STATS</b></h1>
+            <p></p>
+            <br><label for="lname"><b>Email:</b></label>
+            <input type="email" name="emailaddress">
+            <br><label for="fname"><b>Username:</b></label>
+            <input type="text" name="uname">
+            <br><label for="lname"><b>Password:</b></label>
+            <input type="text" name="pword">
+            <br><input type="submit">
+            <br />
+            <p><b>Skip sign in and just see your MMR?</b></p>
+            <button type="button">Skip</button>
+        </form>
+        
     </body>
 </div>
+

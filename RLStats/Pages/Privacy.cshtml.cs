@@ -17,6 +17,15 @@ namespace RLStats.Pages
             _logger = logger;
         }
 
+        public void OnPost()
+        {
+            
+            var inGameName = Request.Form["ingamename"];
+            
+            System.Diagnostics.Debug.WriteLine(inGameName);
+            
+        }
+
         public void OnGet()
         {
         }

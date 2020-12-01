@@ -1,8 +1,26 @@
 ﻿@page
 @model PrivacyModel
 @{
-    ViewData["Title"] = "Privacy Policy";
+    ViewData["Title"] = "";
 }
 <h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+
+
+<div class="text-center">
+    <body style="background-color:DodgerBlue;">
+        <h1 class="display-4"><b>Find Your In Game Account!</b></h1>
+        <p><b>Select your platform and enter your in game name.</b></p>
+        <p></p>
+        <button type="button">Steam</button>
+        <button type="button">Xbox</button>
+        <button type="button">Playstaion</button>
+        <p></p>
+        <form method="post">
+            <label for="fname"><b>Username:</b></label>
+            <input type="text"  name="ingamename"><br><br>
+            <input type="submit" value="Submit">
+        </form>
+
+</body>
+</div>
