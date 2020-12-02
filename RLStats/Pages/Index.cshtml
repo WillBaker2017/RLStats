@@ -1,30 +1,48 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+	ViewData["Title"] = "Home page";
 }
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Login V2</title>
+	<link href="css/singlePageTemplate.css" rel="stylesheet" />
+	<script src="libraries/jquery-1.10.2.js" type="text/javascript"></script>
+	<script src="libraries/bootstrap.js" type="text/javascript"></script>
+</head>
+<body>
+	<div id="form-container">
+		<div id="form-view">
+			<svg class="Rectangle_23">
+				<rect fill="rgba(255,255,255,1)" stroke="rgba(112,112,112,1)" stroke-width="1px" stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="4" shape-rendering="auto" id="Rectangle_23" rx="0" ry="0" x="0" y="0" width="200" height="200">
+				</rect>
+			</svg>
+			<div id="form-slider">
 
+				<!--Login Form-->
+				<div class="form" id="login-form">
 
-<div class="text-center">
-    <body style="background-color:DodgerBlue;">
-
-        
-
-        <form method="post">
-            <h1 class="display-4"><b>RL STATS</b></h1>
-            <p></p>
-            <br><label for="ename"><b>Email:</b></label>
-            <input type="email" name="emailaddress">
-            <br><label for="fname"><b>Username:</b></label>
-            <input type="text" name="uname">
-            <br><label for="lname"><b>Password:</b></label>
-            <input type="text" name="pword">
-            <br><input type="submit">
-            <br />
-            <p><b>Skip sign in and just see your MMR?</b></p>
-            <button type="button">Skip</button>
-        </form>
-        
-    </body>
-</div>
-
+					<div class="form-head"><p>Login</p></div>
+					@Model.Msg
+					<form class="form-body" method="post" asp-page="Index">
+						<br />
+						<label for="username">Username</label>
+						<input class="input-field" type="text" name="username" asp-for="@Model.username" />
+						<br /><br />
+						<label for="password">Password</label>
+						<input class="input-field" type="text" name="password" asp-for="@Model.password" />
+						<br /><br />
+						<input class="form-button" name="btn" id="login" value="Login" type="submit" />
+						<input class="form-button" name="btn" id="signup" value="Signup" type="submit" />
+						<br /><br />
+					</form>
+				</div>
+			</div>
+		</div>
+		<div id="Logophoto" class="Logophoto">
+			<img id="NoPath___Copy__14_" src="rlstatslogo.png" srcset="rlstatslogo.png 1x, rlstatslogo.png@2x.png 2x">
+		</div>
+	</div>
+</body>
+</html>
