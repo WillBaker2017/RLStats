@@ -13,51 +13,125 @@ namespace RLStats.Pages
 {
     public class IndexModel : PageModel
     {
-        public string ServerValue = String.Empty;
+        string connStr = "Server=tcp:rlstats.database.windows.net,1433;Initial Catalog=RLStats;Persist Security Info=False;User ID=rladmin;Password=RLpassword2020!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=10;";
+
+        [BindProperty]
+        public string username { get; set; }
+
+        [BindProperty]
+        public string password { get; set; }
+
+        public string Msg { get; set; }
+
+        [HiddenInput(DisplayValue = false)]
+        public string usererror { get; set; }
+
+		public string ServerValue = String.Empty;
 
         private readonly ILogger<IndexModel> _logger;
+
+
+		
+
+
+        public IActionResult OnPost(string btn)
+        { 
+            //Determine if the user is logging in or signing up
+
+            if(btn == "Login")
+			{
+                //user is logging in
+                string sqlReturnString;
+                //Start SQL Connection
+                using (var con = new SqlConnection(connStr))//when we connect to sql database
+                {
+                    var sql = "select USERNAME from USER_ACCOUNTS WHERE USERNAME = @username AND PASSWORD = @password";//our qury to exec a login test
+                    using (var cmd = new SqlCommand(sql, con))//build the commmand
+                    {
+                        cmd.Parameters.AddWithValue("@username", username);//send username entered
+                        cmd.Parameters.AddWithValue("@password", password);//send password entered
+                        con.Open();//open the connection
+                        sqlReturnString = (string)cmd.ExecuteScalar();//get the request from the server and set the varable from the query
+                        con.Close();//close the connection to sql database
+                    }
+                }//after using the sql database we know if the username and password was entered correctly
+                 //Check for returned username
+                if (sqlReturnString == username.ToString())
+                {
+                    //Log in Was Valid Send to Profile
+                    System.Diagnostics.Debug.WriteLine("Log in succfulll");
+                    return RedirectToPage("/Privacy");
+
+                }
+                else
+                {
+                    //User entered incorrect information
+                    System.Diagnostics.Debug.WriteLine("Log in Failed");
+                    return Page();
+                }
+			}
+			else
+			{
+                //User is signing up
+                string sqlReturnString;
+                //First Get the users input and check its not null
+                if (CheckNewAccount(username) == 0)
+                {
+                    return Page();
+                }
+
+                //Start SQL Connection
+                using (var con = new SqlConnection(connStr))//when we connect to sql database
+                {
+                    var sql = "INSERT INTO USER_ACCOUNTS (username,password) VALUES (@username, @password);";//our qury to exec a login test
+                    using (var cmd = new SqlCommand(sql, con))//build the commmand
+                    {
+                        cmd.Parameters.AddWithValue("@username", username);//send username entered
+                        cmd.Parameters.AddWithValue("@password", password);//send password entered
+                        con.Open();//open the connection
+                        sqlReturnString = (string)cmd.ExecuteScalar();//get the request from the server and set the varable from the query
+                        con.Close();//close the connection to sql database
+                    }
+                }//after using the sql database we know if the username and password was entered correctly
+                 //Check for returned username
+                return RedirectToPage("/Privacy");
+            }
+        }
+
 
         public IndexModel(ILogger<IndexModel> logger)
         {
             _logger = logger;
         }
 
-        public void OnPost()
-        {
-            var emailAddress = Request.Form["emailaddress"];
-            var uName = Request.Form["uname"];
-            var pWord = Request.Form["pword"];
-            // do something with emailAddress
-            System.Diagnostics.Debug.WriteLine(emailAddress);
-            System.Diagnostics.Debug.WriteLine(uName);
-            System.Diagnostics.Debug.WriteLine(pWord);
-
-
-            string connStr = "Server=tcp:rlstats.database.windows.net,1433;Initial Catalog=RLStats;Persist Security Info=False;User ID=rladmin;Password=RLpassword2020!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=10;";
-            string usernamereturn;//the username from sql
+        public int CheckNewAccount(String username)
+		{
+            //connect to sql and check for username existing 
+            string sqlReturnString;
+            //First Get the users input and check its not null
+            //Start SQL Connection
             using (var con = new SqlConnection(connStr))//when we connect to sql database
             {
-                var sql = "select USERNAME from USER_ACCOUNTS WHERE USERNAME = @username AND PASSWORD = @password";//our qury to exec a login test
+                var sql = "select USERNAME from USER_ACCOUNTS WHERE USERNAME = @username";//our qury to exec a login test
                 using (var cmd = new SqlCommand(sql, con))//build the commmand
                 {
-                    cmd.Parameters.AddWithValue("@username", uName.ToString());//send username entered
-                    cmd.Parameters.AddWithValue("@password", pWord.ToString());//send password entered
+                    cmd.Parameters.AddWithValue("@username", username.ToString());//send username entered
+                   
                     con.Open();//open the connection
-                    usernamereturn = (string)cmd.ExecuteScalar();//get the request from the server and set the varable from the query
+                    sqlReturnString = (string)cmd.ExecuteScalar();//get the request from the server and set the varable from the query
                     con.Close();//close the connection to sql database
                 }
             }//after using the sql database we know if the username and password was entered correctly
-            if (usernamereturn == uName.ToString())
+            if (sqlReturnString == username.ToString())
             {
-                System.Diagnostics.Debug.WriteLine("Log in succfulll");
-
+                //Username Already exists
+                System.Diagnostics.Debug.WriteLine("Duplicate Username Found");
+                usererror = "Duplicate Username Found";
+                return 0;
             }
-            else {
-                System.Diagnostics.Debug.WriteLine("bruh");
+              System.Diagnostics.Debug.WriteLine("User Dosent Exist, Create Account");
+              return 1;
             }
-
-        }
-
 
 
         public void OnGet()

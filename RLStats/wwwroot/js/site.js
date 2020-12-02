@@ -2,3 +2,6 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your Javascript code.
+
+function UpdateErrorCode() {
+    document.getElementById('<%=hidden.ClientID %>').value = '12';
