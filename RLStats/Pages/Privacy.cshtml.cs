@@ -24,13 +24,7 @@ namespace RLStats.Pages
 		public string playerId { get; set; }
 		public string Standard3MMR { get; set; }
 		public string Standard2MMR { get; set; }
-
-
-
-
-
-
-
+		public string GameLabel;
 
 		private readonly ILogger<PrivacyModel> _logger;
 
@@ -60,7 +54,7 @@ namespace RLStats.Pages
 			{
 				return Page();
 			}
-			var URL = "http://localhost:28015/api/RocketLeague?platform=" + Platform + "&name=" + platformusername.ToString();
+			var URL = "http://20.42.107.40:28015/api/RocketLeague?platform=" + Platform + "&name=" + platformusername.ToString();
 			using var client = new HttpClient();
 			var content = await client.GetStringAsync(URL);
 			RLMMR TempTest = Newtonsoft.Json.JsonConvert.DeserializeObject<RLMMR>(content);
@@ -76,8 +70,9 @@ namespace RLStats.Pages
 				result = "Fetched Profile";
 				//message = TempTest.message.ToString();
 				playerId = "PlayerID: "+TempTest.playerId.ToString();
-				Standard3MMR = "3V3 MMR: "+TempTest.Standard3MMR.ToString();
-				Standard2MMR = "2V2 MMR: "+TempTest.Standard2MMR.ToString();
+				Standard3MMR = "3V3 MMR: " + TempTest.Standard3MMR.ToString();
+				Standard2MMR = "2V2 MMR: " + TempTest.Standard2MMR.ToString();
+				GameLabel = "3V3 MMR: 2V2 MMR:";
 			}
 			else
 			{

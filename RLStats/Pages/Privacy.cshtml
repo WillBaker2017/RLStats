@@ -10,21 +10,24 @@
 <div class="text-center">
 	<body style="background-color:DodgerBlue;">
 		<h1 class="display-4"><b>Find Your In Game Account!</b></h1>
-		<p><b>Select your platform and enter your in game name.</b></p>
+		<p><b>Enter your in game name and select your platform.</b></p>
 		<p></p>
 		<p></p>
 		@Model.Msg
-	<form method="post" asp-page="Privacy">
-		<label for="fname"><b>Username:</b></label>
-		<input type="text" asp-for="@Model.platformusername" name="platformusername"><br><br>
-		<input name="btn" id="Xbox" value="Xbox" type="submit" />
-		<input name="btn" id="Playstaion" value="Playstaion" type="submit" /><br><br>
-		<label>@Model.result</label><br>
-		<label>@Model.message</label><br>
-		<label>@Model.playerId</label><br>
-		<label>@Model.Standard3MMR</label><br>
-		<label>@Model.Standard2MMR</label><br>
-	</form>
+    <form method="post" asp-page="Privacy">
+        <label for="fname"><b>Username:</b></label>
+        <input type="text" asp-for="@Model.platformusername" name="platformusername"><br><br>
+        <input name="btn" id="Xbox" value="Xbox" type="submit" />
+        <input name="btn" id="Playstaion" value="Playstaion" type="submit" /><br><br>
+        <p></p>
+        <h1 <label>@Model.playerId</label></h1>
+        <h1 <label>@Model.Standard3MMR </label></h1>
+        <h1 <label>@Model.Standard2MMR</label></h1>
+        <h1 <label>@Model.message</label></h1><br>
+
+        
+       
+    </form>
 
 	</body>
 </div>
